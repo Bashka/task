@@ -1,0 +1,35 @@
+<div>
+  <h2>Задание 2:</h2>
+  <p>Оптимизировать структуру БД и SQL запроса к ней.</p>
+</div>
+<div>
+  <h2>Решение:</h2>
+  <p>
+    <ul>
+      <li>
+        Так как таблица link является связывающей в связи типа Много-ко-Многим, поля data_id и info_id должны быть проиндексированы:<br/>
+        <code>
+          CREATE TABLE `link` (
+            `data_id` int(11) NOT NULL,
+            `info_id` int(11) NOT NULL,
+
+            INDEX data (data_id),
+            INDEX info (info_id),
+
+            FOREIGN KEY (data_id) REFERENCES data(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+            FOREIGN KEY (info_id) REFERENCES info(id) ON UPDATE CASCADE ON DELETE RESTRICT
+          ) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+        </code>
+      </li>
+      <li>
+        Конструкцию Select можно привести к следующему виду:<br/>
+        <code>
+          SELECT *
+          FROM data
+          INNER JOIN link ON link.data_id = data.id
+          INNER JOIN info ON link.info_id = info.id
+        </code>
+      </li>
+    </ul>
+  </p>
+</div>
