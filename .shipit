@@ -1,0 +1,6 @@
+host='pi'
+path='/var/www/task'
+
+[deploy]
+git checkout master
+git pull
